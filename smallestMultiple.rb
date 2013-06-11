@@ -11,6 +11,10 @@ class TestSmallestMultiple < MiniTest::Unit::TestCase
 			assert @smallest_multiple.is_multiple_of_numbers_1_to_10?(number),"number #{number} is NOT multiple"
 		end	
 	end
+
+	def test_number_divisible_by_number_1_to_20
+		
+	end
 end
 
 class SmallestMultiple
