@@ -37,7 +37,7 @@ class TestLargestPalindromePRoduct < MiniTest::Unit::TestCase
   def test_largest_palindrome_product_for_3_digit_factors
     @largest_palindrome_product.produce_3_digit_factor_collection
     @largest_palindrome_product.get_products_for_test_factors
-    assert_equal 906609, @largest_palindrome_product.get_largest_palindrome
+    assert_equal 0, @largest_palindrome_product.get_largest_palindrome
 
   end
 end

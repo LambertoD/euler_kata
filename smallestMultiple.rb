@@ -21,13 +21,25 @@ class TestSmallestMultiple < MiniTest::Unit::TestCase
   end
 
   def test_get_common_multiple
-    common_multiple = 0
-    (2..9).each do |num|
-       multiple = @smallest_multiple.multiple_of_two_numbers(num, num+1)
-       if @smallest_multiple.number_is_a_multiple_of_these_two?(multiple, 2, num+1)
-         common_multiple = multiple
-        end
-       puts "Num1: #{num}, Num2: #{num+1} = Common: #{common_multiple}"
+    # common_multiple = 0
+    # (2..9).each do |num|
+    #   multiple = @smallest_multiple.multiple_of_two_numbers(num, num+1)
+    #   while true
+    #     if @smallest_multiple.number_is_a_multiple_of_these_two?(multiple, 2, num+1)
+    #      common_multiple = multiple
+    #      break  
+
+    #   end
+    #    puts "Num1: #{num}, Num2: #{num+1} = Common: #{common_multiple}"
+    # end
+  end
+
+  def test_fill_array_of_multiples_up_to_10
+    array = Array.new(10) { Array.new(10) }
+    (1..10).each do |number|
+      (1..10).each do |multiples|
+        array[number - 1][multiples - 1] = number * multiples
+      end
     end
   end
 
@@ -55,6 +67,7 @@ class SmallestMultiple
     end
     return true if remainder == 0 else return false
   end
+
 
 
 end
