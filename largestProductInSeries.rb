@@ -28,50 +28,51 @@ class TestLargestProductInSeries < MiniTest::Unit::TestCase
     assert_equal "73167", first_five_in_char
   end
 
-  # def test_reading_5_characters_using_stringio
-  #   five_chars = @str.read(5)
-  #   assert_equal "73167",five_chars
-  # end
-
-  def test_loading_chars_to_array
-
-    assert_equal 0, @largest_product_in_series.extract_numbers_from_file_into_array
+  def test_get_product_of_5_digits
+    test_string = '23456'
+    assert_equal 720, @largest_product_in_series.get_product_for_digits(test_string)
   end
 
-  # def test_reading_1_char_at_a_time_until_eof
-  #   position = 0
-  #   while @str.eof? == false
-  #     @str.pos = position
-  #     five_chars = @str.read(5)
-  #     puts five_chars
-  #     position += 1
-  #   end
-  # end
+  def test_array_of_products_size
+    @largest_product_in_series.extract_numbers_from_file_into_array(@number_text)
+    assert_equal 996, @largest_product_in_series.products_array.length
+    assert_equal 996, @largest_product_in_series.products_array.size  
+  end
+
+  def test_greatest_product_in_series
+    @largest_product_in_series.extract_numbers_from_file_into_array(@number_text)
+    assert_equal 40824,  @largest_product_in_series.greatest_product_in_collection
+  end
 end
 
 class LargestProductInSeries
-  attr_accessible :product_array
+  attr_reader :products_array
 
-  def initiallze
-    @five_digit_numbers_array = []
+  def initialize
+    @products_array = []
   end
 
-  def extract_numbers_from_file_into_array
+  def extract_numbers_from_file_into_array(string_of_numbers)
 
     index = 0
-    while index < @number_text.length - 4
-      five_digit_num = @number_text[index..index+4]
-      @five_digit_numbers_array << five_digit_num
+    while index < string_of_numbers.length - 4
+      five_digit_extract = string_of_numbers[index..index+4]
+      @products_array << get_product_for_digits(five_digit_extract)
       # puts "five digit number is : #{five_digit_num}"
       index += 1
     end
   end
 
-  def get_products_for_digits
-    products_array = []
-    @five_digit_numbers_array.each  do |n|
-      n.split('')
+  def get_product_for_digits(digits)
+    product = 1
+    digits.each_char  do |n|
+      product *= n.to_i
     end  
+    product
+  end
+
+  def greatest_product_in_collection
+    @products_array.max
   end
 
 end

@@ -1,65 +1,57 @@
 require 'minitest/autorun'
+load 'primeComposer.rb'
 
 class TestLargestPrimeFactor < MiniTest::Unit::TestCase
   def setup
-    @largest_prime_factor = LargestPrimeFactor.new
+    @largest_prime_factor = LargestPrimeFactor.new(primes: PrimeNumberGenerator.new(size: 30000, primes_array: Array.new))
+    @largest_prime_factor.primes.generate_primes
   end
 
-  # def test_number_is_prime
-  #   number_to_test = 5
-  #   assert @largest_prime_factor.isPrime?(number_to_test), "number is prime"
-  # end
+  def test_get_prime_factors_for_number
+    # number_to_test = 6
+    number_to_test = 13195
+    expected_primes = [5,7,13,29]
+    assert_equal expected_primes, @largest_prime_factor.get_factor_primes(number_to_test)
+  end
 
-  # def test_get_prime_factors_for_number
-  #   number_to_test = 6
-  #   expected_primes = [2,3]
-  #   assert_equal expected_primes, @largest_prime_factor.get_primes(number_to_test)
-  # end
-
-  # def test_get_highest_prime_factor_for_6
-  #   number_to_test = 6
-  #   expected_highest_prime_factor = 3
-  #   assert_equal expected_highest_prime_factor, @largest_prime_factor.get_highest_prime_factor(number_to_test)
-  # end
+  def test_get_highest_prime_factor_for_13195
+    number_to_test = 13195
+    expected_highest_prime_factor = 29
+    @largest_prime_factor.get_factor_primes(number_to_test)
+    assert_equal expected_highest_prime_factor, @largest_prime_factor.highest_prime_factor(number_to_test)
+  end
 
   def test_get_highest_prime_factor_for_600851475143
     number_to_test = 600851475143
-    # number_to_test = 13195
     expected_highest_prime_factor = 29
-    assert_equal expected_highest_prime_factor, @largest_prime_factor.get_highest_prime_factor(number_to_test)
+    @largest_prime_factor.get_factor_primes(number_to_test)
+    assert_equal expected_highest_prime_factor, @largest_prime_factor.highest_prime_factor(number_to_test)
   end 
 end
 
 class LargestPrimeFactor
+  attr_reader :primes
 
-  def initialize
-    @primes_collection = []
+  def initialize(args={})
+    @primes = args[:primes]
+    @prime_factors_collection = []
   end
 
-  def get_primes(number)
-    (2..number).each do | n |
-      if number % n == 0 && isPrime?(n)
-        @primes_collection << n 
-        puts @primes_collection
+  def get_factor_primes(number)
+    @primes.primes_array.each do | n |
+      if number % n == 0
+        @prime_factors_collection << n 
+        print @prime_factors_collection
+        puts
       end
+
+      break if number < n
     end
-    @primes_collection
+    @prime_factors_collection
   end
 
-  def isPrime?(number)
-    i = 2
-    return true if number == 2
-
-    while i < number 
-      return false if number % i == 0
-      i += 1
-    end
-    true
-  end
-
-  def get_highest_prime_factor(number)
-    get_primes(number)
-    @primes_collection.max
+  def highest_prime_factor(number)
+    @prime_factors_collection.max
 
   end
 
