@@ -33,9 +33,9 @@ class TestLargestProductInSeries < MiniTest::Unit::TestCase
   #   assert_equal "73167",five_chars
   # end
 
-  def test_reading_chars_in_iteration
+  def test_loading_chars_to_array
 
-    assert_equal 0, @largest_product_in_series
+    assert_equal 0, @largest_product_in_series.extract_numbers_from_file_into_array
   end
 
   # def test_reading_1_char_at_a_time_until_eof
@@ -53,7 +53,7 @@ class LargestProductInSeries
   attr_accessible :product_array
 
   def initiallze
-    @product_array = []
+    @five_digit_numbers_array = []
   end
 
   def extract_numbers_from_file_into_array
@@ -61,10 +61,17 @@ class LargestProductInSeries
     index = 0
     while index < @number_text.length - 4
       five_digit_num = @number_text[index..index+4]
-      @product_array << five_digit_num
+      @five_digit_numbers_array << five_digit_num
       # puts "five digit number is : #{five_digit_num}"
       index += 1
     end
+  end
+
+  def get_products_for_digits
+    products_array = []
+    @five_digit_numbers_array.each  do |n|
+      n.split('')
+    end  
   end
 
 end
